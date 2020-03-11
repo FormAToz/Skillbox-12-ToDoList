@@ -18,8 +18,18 @@ public class DefaultController {
     }
 
     @PostMapping("/todoitems/")
-    public long addItem(@NotNull @RequestBody ToDoItem item) {
-        return Storage.addItem(item);
+    public ResponseEntity addItem(@NotNull @RequestBody ToDoItem item) {
+        Storage.addItem(item);
+        return ResponseEntity.status(HttpStatus.OK).body(item);
+    }
+
+    @PutMapping("/todoitems/")
+    public ResponseEntity putItemById(@NotNull @RequestBody ToDoItem item) {
+        ToDoItem puttedItem = Storage.putItemById(item);
+        if (puttedItem == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(puttedItem);
     }
 
     @DeleteMapping("/todoitems/{id}")
@@ -28,8 +38,8 @@ public class DefaultController {
         if (todoItem == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        Storage.deleteItemById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        ToDoItem deletedToDo = Storage.deleteItemById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(deletedToDo);
     }
 
     @GetMapping("/todoitems/{id}")
@@ -40,5 +50,10 @@ public class DefaultController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return new ResponseEntity(todoItem, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public List<ToDoItem> searchByToDoText(@RequestParam(value = "query") String text) {
+        return Storage.searchByToDoText(text);
     }
 }
