@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Список бездельника</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div class="main_block">
+		<h1 id="todotitle">СПИСОК БЕЗДЕЛЬНИКА</h1>
+		<div class="list">
+			<div th:each="item : ${todoitems}">
+				<li th:attr="data-id=${item.id}" th:text="${item.title}"></li>
+			</div>
+		</div>
+	</div>
+	<p>
+		<a href="index.html#todotitle">&#8657; Наверх</a>
+	</p>
+</body>
+</html>

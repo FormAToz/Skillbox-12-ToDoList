@@ -22,7 +22,7 @@ public class DefaultController {
     public List<ToDoItem> list() {
 
         List<ToDoItem> items = new ArrayList<>();
-        toDoItemsRepository.findAll().forEach(el -> items.add(el));
+        toDoItemsRepository.findAll().forEach(items::add);
         return items;
     }
 
