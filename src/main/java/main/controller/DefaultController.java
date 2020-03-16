@@ -68,12 +68,6 @@ public class DefaultController {
     @GetMapping("/search")
     public List<ToDoItem> searchByToDoText(@RequestParam(value = "query") String text) {
 
-        List<ToDoItem> items = new ArrayList<>();
-        toDoItemsRepository.findAll().forEach(el -> {
-            if (el.getTitle().equals(text)) {
-                items.add(el);
-            }
-        });
-        return items;
+        return toDoItemsRepository.searchByTitle(text);
     }
 }
